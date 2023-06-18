@@ -1,11 +1,11 @@
-package com.nandaiqbalh.foodapp
+package com.nandaiqbalh.foodapp.presentation.ui
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.nandaiqbalh.foodapp.R
 import com.nandaiqbalh.foodapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
