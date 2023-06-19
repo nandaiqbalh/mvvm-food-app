@@ -39,6 +39,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_to_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Floating action button"
@@ -120,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:textColor="@color/font_black"
                 tools:text="halo ini adalah contoh instruction"
                 android:textSize="14sp"
