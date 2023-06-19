@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.nandaiqbalh.foodapp.data.network.models.Meal
+import com.nandaiqbalh.foodapp.data.network.models.category.CategoryMeals
+import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.databinding.FragmentHomeBinding
 import com.nandaiqbalh.foodapp.presentation.ui.detail.DetailMealActivity
+import com.nandaiqbalh.foodapp.presentation.ui.home.adapter.PopularAdapter
 
 class HomeFragment : Fragment() {
 
@@ -19,7 +22,10 @@ class HomeFragment : Fragment() {
 
 	private lateinit var viewModel: HomeViewModel
 
-	private lateinit var randomMeal:Meal
+	// popular items
+	private lateinit var popularAdapter: PopularAdapter
+
+	private lateinit var randomMeal: Meal
 	// for key intent to detail
 	companion object{
 		const val MEAL_ID = "idMealToDetail"
@@ -31,6 +37,8 @@ class HomeFragment : Fragment() {
 		super.onCreate(savedInstanceState)
 
 		viewModel = ViewModelProviders.of(this)[HomeViewModel::class.java]
+
+		popularAdapter = PopularAdapter()
 	}
 
 	override fun onCreateView(
@@ -46,8 +54,15 @@ class HomeFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		// recommendations
 		viewModel.getRandomMeal()
 		observeRandomMeal()
+
+		// popular items
+		preparePopularItemsRV()
+		viewModel.getPopularItems()
+		observePopularItems()
+
 
 		// on click
 		onRandomMealClick()
@@ -71,6 +86,21 @@ class HomeFragment : Fragment() {
 				.into(binding.imgRandomMeal)
 
 			randomMeal = t
+		}
+	}
+
+	private fun observePopularItems(){
+		viewModel.observePopularItemsLiveData().observe(viewLifecycleOwner) { mealList ->
+
+			popularAdapter.setMealList(mealsList = mealList as ArrayList<CategoryMeals>)
+		}
+	}
+
+	private fun preparePopularItemsRV(){
+		binding.recViewMealsPopular.apply {
+			layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+			adapter = popularAdapter
 		}
 	}
 

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nandaiqbalh.foodapp.data.network.api.RetrofitInstance
-import com.nandaiqbalh.foodapp.data.network.models.Meal
-import com.nandaiqbalh.foodapp.data.network.models.MealList
+import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
+import com.nandaiqbalh.foodapp.data.network.models.meal.MealList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.nandaiqbalh.foodapp.data.network.models
+package com.nandaiqbalh.foodapp.data.network.models.meal
 
 data class Meal(
     val dateModified: Any,
