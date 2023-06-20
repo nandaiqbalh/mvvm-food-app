@@ -4,14 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nandaiqbalh.foodapp.data.network.api.RetrofitInstance
+import com.nandaiqbalh.foodapp.data.network.local.database.MealDatabase
 import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.data.network.models.meal.MealList
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailMealViewModel:ViewModel() {
+class DetailMealViewModel(
+	val mealDatabase: MealDatabase
+):ViewModel() {
 
 	private var mealDetailsLiveData = MutableLiveData<Meal>()
 
@@ -29,6 +34,18 @@ class DetailMealViewModel:ViewModel() {
 				Log.d("MealDetailLog", "Error: ${t.message.toString() }")
 			}
 		})
+	}
+
+	fun insertMeal(meal: Meal){
+		viewModelScope.launch {
+			mealDatabase.mealDao().upsertMeal(meal)
+		}
+	}
+
+	fun deleteMeal(meal: Meal){
+		viewModelScope.launch {
+			mealDatabase.mealDao().deleteMeal(meal)
+		}
 	}
 
 	fun observeMealDetailLiveData():LiveData<Meal>{

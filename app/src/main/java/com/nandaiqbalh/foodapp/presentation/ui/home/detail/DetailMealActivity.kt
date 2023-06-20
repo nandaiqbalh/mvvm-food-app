@@ -5,11 +5,16 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.nandaiqbalh.foodapp.R
+import com.nandaiqbalh.foodapp.data.network.local.database.MealDatabase
+import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.databinding.ActivityDetailMealBinding
 import com.nandaiqbalh.foodapp.presentation.ui.home.HomeFragment
+import com.nandaiqbalh.foodapp.util.MealViewModelFactory
 
 class DetailMealActivity : AppCompatActivity() {
 
@@ -30,7 +35,10 @@ class DetailMealActivity : AppCompatActivity() {
 		_binding = ActivityDetailMealBinding.inflate(layoutInflater)
 
 		// init
-		viewModel = ViewModelProviders.of(this)[DetailMealViewModel::class.java]
+//		viewModel = ViewModelProviders.of(this)[DetailMealViewModel::class.java]
+		val mealDatabase = MealDatabase.getInstance(this)
+		val viewModelFactory = MealViewModelFactory(mealDatabase)
+		viewModel = ViewModelProvider(this, viewModelFactory).get(DetailMealViewModel::class.java)
 
 		// get info
 		getInfoFromIntent()
@@ -46,7 +54,19 @@ class DetailMealActivity : AppCompatActivity() {
 		viewModel.getMealDetails(mealId)
 		observeMealDetailLiveData()
 
+		// save meal
+		onFavoriteClick()
+
 		setContentView(binding.root)
+	}
+
+	private fun onFavoriteClick() {
+		binding.fabAddToFavorites.setOnClickListener {
+			mealToSave?.let {
+				viewModel.insertMeal(it)
+				Toast.makeText(this, "Meal saved successfully!", Toast.LENGTH_SHORT).show()
+			}
+		}
 	}
 
 	private fun onYoutubeImgClick(){
@@ -55,9 +75,15 @@ class DetailMealActivity : AppCompatActivity() {
 			startActivity(intent)
 		}
 	}
+
+	private var mealToSave : Meal? = null
 	private fun observeMealDetailLiveData(){
 		viewModel.observeMealDetailLiveData().observe(this
 		) { meal ->
+
+			// initialize value for save meal
+			mealToSave = meal
+
 			onResponse()
 			youtubeLink = meal.strYoutube
 
