@@ -20,7 +20,7 @@ class DetailMealActivity : AppCompatActivity() {
 	private lateinit var mealName:String
 	private lateinit var mealThumb: String
 
-	private lateinit var youtubeLink: String
+	private var youtubeLink: String? = null
 
 	private lateinit var viewModel: DetailMealViewModel
 
