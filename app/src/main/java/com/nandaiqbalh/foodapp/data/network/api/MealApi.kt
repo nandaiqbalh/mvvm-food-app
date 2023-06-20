@@ -1,7 +1,7 @@
 package com.nandaiqbalh.foodapp.data.network.api
 
 import com.nandaiqbalh.foodapp.data.network.models.category.CategoryList
-import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategory
+import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategoryList
 import com.nandaiqbalh.foodapp.data.network.models.meal.MealList
 import retrofit2.Call
 import retrofit2.http.GET
@@ -20,8 +20,13 @@ interface MealApi {
 	@GET("filter.php?")
 	fun getPopularItems(
 		@Query("c") categoryName: String
-	) : Call<MealByCategory>
+	) : Call<MealByCategoryList>
 
 	@GET("categories.php")
 	fun getCategories() : Call<CategoryList>
+
+	@GET("filter.php")
+	fun getMealByCategory(
+		@Query("c") categoryName: String
+	) : Call<MealByCategoryList>
 }

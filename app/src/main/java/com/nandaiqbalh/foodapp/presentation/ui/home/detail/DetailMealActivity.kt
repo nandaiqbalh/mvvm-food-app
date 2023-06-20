@@ -1,4 +1,4 @@
-package com.nandaiqbalh.foodapp.presentation.ui.detail
+package com.nandaiqbalh.foodapp.presentation.ui.home.detail
 
 import android.content.Intent
 import android.net.Uri

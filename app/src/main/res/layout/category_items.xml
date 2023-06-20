@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_category_item"
         android:text="Category Name"
-        android:textSize="8sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/font_black"/>
 

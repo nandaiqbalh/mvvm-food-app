@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tvTitleHome"
+                android:id="@+id/tv_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -40,8 +40,8 @@
                 android:text="Let’s make some foods"
                 android:textColor="@color/secondary"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvTitleHome"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitleHome" />
+                app:layout_constraintStart_toStartOf="@+id/tv_category_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_category_name" />
 
             <ImageView
                 android:id="@+id/ic_search"
@@ -51,7 +51,7 @@
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_subtitle_home"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvTitleHome" />
+                app:layout_constraintTop_toTopOf="@+id/tv_category_name" />
 
             <TextView
                 android:id="@+id/tv_recommendation_title"
@@ -62,7 +62,7 @@
                 android:text="Our Recommendations"
                 android:textColor="@color/font_black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvTitleHome"
+                app:layout_constraintStart_toStartOf="@+id/tv_category_name"
                 app:layout_constraintTop_toBottomOf="@+id/tv_subtitle_home" />
 
             <androidx.cardview.widget.CardView
@@ -97,7 +97,7 @@
                 android:text="Popular foods"
                 android:textColor="@color/font_black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvTitleHome"
+                app:layout_constraintStart_toStartOf="@+id/tv_category_name"
                 app:layout_constraintTop_toBottomOf="@+id/random_meal" />
 
 
@@ -110,7 +110,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 tools:listitem="@layout/popular_items"
-                app:layout_constraintStart_toStartOf="@id/tvTitleHome"
+                app:layout_constraintStart_toStartOf="@id/tv_category_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_popular_title" />
 
 
@@ -122,7 +122,7 @@
                 android:text="Categories"
                 android:textColor="@color/font_black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvTitleHome"
+                app:layout_constraintStart_toStartOf="@+id/tv_category_name"
                 app:layout_constraintTop_toBottomOf="@+id/rec_view_meals_popular" />
 
             <androidx.cardview.widget.CardView

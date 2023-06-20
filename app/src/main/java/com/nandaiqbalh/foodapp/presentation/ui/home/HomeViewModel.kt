@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.nandaiqbalh.foodapp.data.network.api.RetrofitInstance
 import com.nandaiqbalh.foodapp.data.network.models.category.Category
 import com.nandaiqbalh.foodapp.data.network.models.category.CategoryList
+import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategoryList
 import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategory
-import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.CategoryMeals
 import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.data.network.models.meal.MealList
 import retrofit2.Call
@@ -18,7 +18,7 @@ import retrofit2.Response
 class HomeViewModel(): ViewModel() {
 
 	private var randomMealLiveData = MutableLiveData<Meal>()
-	private var popularItemsLiveData = MutableLiveData<List<CategoryMeals>>()
+	private var popularItemsLiveData = MutableLiveData<List<MealByCategory>>()
 	private var categoriesLiveData = MutableLiveData<List<Category>>()
 
 	fun getRandomMeal(){
@@ -41,15 +41,15 @@ class HomeViewModel(): ViewModel() {
 	}
 
 	fun getPopularItems(){
-		RetrofitInstance.api.getPopularItems("Seafood").enqueue(object : Callback<MealByCategory>{
-			override fun onResponse(call: Call<MealByCategory>, response: Response<MealByCategory>) {
+		RetrofitInstance.api.getPopularItems("Seafood").enqueue(object : Callback<MealByCategoryList>{
+			override fun onResponse(call: Call<MealByCategoryList>, response: Response<MealByCategoryList>) {
 
 				if (response.body() != null){
 					popularItemsLiveData.value = response.body()!!.meals
 				}
 			}
 
-			override fun onFailure(call: Call<MealByCategory>, t: Throwable) {
+			override fun onFailure(call: Call<MealByCategoryList>, t: Throwable) {
 				Log.d("Error Popular", "Error: ${t.message.toString() }")
 			}
 		})
@@ -74,7 +74,7 @@ class HomeViewModel(): ViewModel() {
 		return randomMealLiveData
 	}
 
-	fun observePopularItemsLiveData(): LiveData<List<CategoryMeals>>{
+	fun observePopularItemsLiveData(): LiveData<List<MealByCategory>>{
 		return popularItemsLiveData
 	}
 

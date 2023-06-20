@@ -2,7 +2,6 @@ package com.nandaiqbalh.foodapp.presentation.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.CategoryMeals
+import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategory
 import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.databinding.FragmentHomeBinding
-import com.nandaiqbalh.foodapp.presentation.ui.detail.DetailMealActivity
+import com.nandaiqbalh.foodapp.presentation.ui.home.detail.DetailMealActivity
 import com.nandaiqbalh.foodapp.presentation.ui.home.adapter.CategoryAdapter
 import com.nandaiqbalh.foodapp.presentation.ui.home.adapter.PopularAdapter
+import com.nandaiqbalh.foodapp.presentation.ui.home.categorypage.CategoriesActivity
 
 class HomeFragment : Fragment() {
 
@@ -38,6 +38,9 @@ class HomeFragment : Fragment() {
 		const val MEAL_ID = "idMealToDetail"
 		const val MEAL_NAME = "nameMealToDetail"
 		const val MEAL_THUMB = "thumbMealToDetail"
+
+		// categories onclick
+		const val CATEGORY_NAME = "categoryNameToPage"
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,9 +79,20 @@ class HomeFragment : Fragment() {
 		viewModel.getCategories()
 		observeCategories()
 
+		// categories onclick
+		onCategoryClick()
 
 		// on click
 		onRandomMealClick()
+	}
+
+	private fun onCategoryClick() {
+		categoryAdapter.onItemClick = {category ->
+			val intent = Intent(activity, CategoriesActivity::class.java)
+			intent.putExtra(CATEGORY_NAME, category.strCategory)
+			startActivity(intent)
+
+		}
 	}
 
 	private fun observeCategories() {
@@ -112,7 +126,7 @@ class HomeFragment : Fragment() {
 	private fun observePopularItems() {
 		viewModel.observePopularItemsLiveData().observe(viewLifecycleOwner) { mealList ->
 
-			popularAdapter.setMealList(mealsList = mealList as ArrayList<CategoryMeals>)
+			popularAdapter.setMealList(mealsList = mealList as ArrayList<MealByCategory>)
 		}
 	}
 
