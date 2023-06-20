@@ -1,16 +1,18 @@
 package com.nandaiqbalh.foodapp.presentation.ui.favorites
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nandaiqbalh.foodapp.data.network.local.database.MealDatabase
 import com.nandaiqbalh.foodapp.databinding.FragmentFavoritesBinding
 import com.nandaiqbalh.foodapp.presentation.ui.favorites.adapter.FavoritesMealAdapter
+import com.nandaiqbalh.foodapp.presentation.ui.home.HomeFragment
+import com.nandaiqbalh.foodapp.presentation.ui.home.detail.DetailMealActivity
 import com.nandaiqbalh.foodapp.util.FavoritesViewModelFactory
 
 class FavoritesFragment : Fragment() {
@@ -48,6 +50,9 @@ class FavoritesFragment : Fragment() {
 
 		// observe
 		observeFavoritesMeal()
+
+		// onclick
+		onItemClick()
 	}
 
 	private fun prepareRVFavoritesMeal(){
@@ -59,7 +64,16 @@ class FavoritesFragment : Fragment() {
 			adapter = favoritesMealAdapter
 		}
 	}
+	private fun onItemClick() {
+		favoritesMealAdapter.onItemClick = {meal ->
+			val intent = Intent(requireContext(), DetailMealActivity::class.java)
+			intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+			intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+			intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+			startActivity(intent)
 
+		}
+	}
 	private fun observeFavoritesMeal(){
 		viewModel.observeFavoritesMealLiveData().observe(viewLifecycleOwner){meals ->
 			favoritesMealAdapter.differ.submitList(meals)

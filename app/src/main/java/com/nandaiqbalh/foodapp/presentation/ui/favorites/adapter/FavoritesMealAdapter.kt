@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.databinding.FavoritesMealItemBinding
 
-class FavoritesMealAdapter(): RecyclerView.Adapter<FavoritesMealAdapter.FavoritesMealViewHolder>() {
+class FavoritesMealAdapter : RecyclerView.Adapter<FavoritesMealAdapter.FavoritesMealViewHolder>() {
 
 	private val diffUtil = object : DiffUtil.ItemCallback<Meal>(){
 		override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
@@ -23,6 +23,7 @@ class FavoritesMealAdapter(): RecyclerView.Adapter<FavoritesMealAdapter.Favorite
 
 	val differ = AsyncListDiffer(this, diffUtil)
 
+	var onItemClick: ((Meal) -> Unit)? = null
 	class FavoritesMealViewHolder(val binding:FavoritesMealItemBinding): RecyclerView.ViewHolder(binding.root)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesMealViewHolder {
@@ -38,6 +39,12 @@ class FavoritesMealAdapter(): RecyclerView.Adapter<FavoritesMealAdapter.Favorite
 			.into(holder.binding.ivMealItem)
 
 		holder.binding.tvNameMealItem.text = meal.strMeal
+		holder.binding.tvLocationMealItem.text = "Location: ${meal.strArea}"
+
+		// item onclick
+		holder.itemView.setOnClickListener {
+			onItemClick!!.invoke(meal)
+		}
 	}
 
 	override fun getItemCount(): Int {
