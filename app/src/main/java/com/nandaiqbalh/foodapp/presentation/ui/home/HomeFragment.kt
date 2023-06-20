@@ -68,6 +68,8 @@ class HomeFragment : Fragment() {
 		// recommendations
 		viewModel.getRandomMeal()
 		observeRandomMeal()
+		// on click
+		onRandomMealClick()
 
 		// popular items
 		preparePopularItemsRV()
@@ -82,8 +84,6 @@ class HomeFragment : Fragment() {
 		// categories onclick
 		onCategoryClick()
 
-		// on click
-		onRandomMealClick()
 	}
 
 	private fun onCategoryClick() {

@@ -30,7 +30,7 @@
             android:fontFamily="@font/poppins_medium"
             android:textSize="14sp"
             android:textColor="@color/font_black"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/iv_meal_item"
             app:layout_constraintTop_toBottomOf="@+id/iv_meal_item"/>

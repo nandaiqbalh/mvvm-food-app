@@ -11,6 +11,8 @@ class MealsByCategoryAdapater(): RecyclerView.Adapter<MealsByCategoryAdapater.Me
 
 	private var mealList = ArrayList<MealByCategory>()
 
+	var onItemClick: ((MealByCategory ) -> Unit)? = null
+
 	fun setMealList(mealList: List<MealByCategory>){
 		this.mealList = mealList as ArrayList<MealByCategory>
 		notifyDataSetChanged()
@@ -29,6 +31,11 @@ class MealsByCategoryAdapater(): RecyclerView.Adapter<MealsByCategoryAdapater.Me
 			.into(holder.binding.ivMealItem)
 
 		holder.binding.tvNameMealItem.text = mealList[position].strMeal
+
+		// category onclick
+		holder.itemView.setOnClickListener {
+			onItemClick!!.invoke(mealList[position])
+		}
 	}
 
 	override fun getItemCount(): Int {

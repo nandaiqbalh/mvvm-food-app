@@ -29,17 +29,22 @@ class DetailMealActivity : AppCompatActivity() {
 
 		_binding = ActivityDetailMealBinding.inflate(layoutInflater)
 
+		// init
+		viewModel = ViewModelProviders.of(this)[DetailMealViewModel::class.java]
+
+		// get info
 		getInfoFromIntent()
 
+		// set UI
 		setInfoInViews()
+		onLoadingCase()
 
-		viewModel = ViewModelProviders.of(this)[DetailMealViewModel::class.java]
-		viewModel.getMealDetails(mealId)
-		observeMealDetailLiveData()
-
+		// onclick
 		onYoutubeImgClick()
 
-		onLoadingCase()
+		// observe
+		viewModel.getMealDetails(mealId)
+		observeMealDetailLiveData()
 
 		setContentView(binding.root)
 	}
