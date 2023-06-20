@@ -1,4 +1,4 @@
-package com.nandaiqbalh.foodapp.data.network.models.category
+package com.nandaiqbalh.foodapp.data.network.models.mealbycategory
 
 data class CategoryMeals(
     val idMeal: String,
