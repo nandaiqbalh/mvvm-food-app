@@ -2,12 +2,16 @@ package com.nandaiqbalh.foodapp.presentation.ui.favorites
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.nandaiqbalh.foodapp.data.network.local.database.MealDatabase
 import com.nandaiqbalh.foodapp.databinding.FragmentFavoritesBinding
 import com.nandaiqbalh.foodapp.presentation.ui.favorites.adapter.FavoritesMealAdapter
@@ -53,6 +57,47 @@ class FavoritesFragment : Fragment() {
 
 		// onclick
 		onItemClick()
+
+		// move action
+		setMoveAction()
+	}
+
+	private fun setMoveAction(){
+
+		val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
+			ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+			ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+		){
+			override fun onMove(
+				recyclerView: RecyclerView,
+				viewHolder: RecyclerView.ViewHolder,
+				target: RecyclerView.ViewHolder
+			): Boolean {
+				// set action when drag action
+				return true
+			}
+
+			override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+				// set action when swipe action
+				val position = viewHolder.adapterPosition
+
+				// delete meal
+				val deletedMeal = favoritesMealAdapter.differ.currentList[position]
+				viewModel.deleteMeal(deletedMeal)
+
+				// show snackbar
+				Snackbar.make(requireView(), "Meal deleted successfully!", Snackbar.LENGTH_LONG).setAction(
+					"Undo",
+					View.OnClickListener {
+						viewModel.insertMeal(deletedMeal)
+						Log.d("Favorites Fragment", "Undo button was pressed!")
+					}
+				).show()
+			}
+		}
+
+		// attach to recycler view
+		ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rvFavoritesMeal)
 	}
 
 	private fun prepareRVFavoritesMeal(){
