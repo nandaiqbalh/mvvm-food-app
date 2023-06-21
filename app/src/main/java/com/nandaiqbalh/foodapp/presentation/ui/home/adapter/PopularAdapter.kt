@@ -12,6 +12,8 @@ class PopularAdapter :RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
 	private var mealsList= ArrayList<MealByCategory>()
 
+	var onLongItemClick: ((MealByCategory) -> Unit)? = null
+
 	fun setMealList(mealsList: ArrayList<MealByCategory>) {
 		this.mealsList = mealsList
 		notifyDataSetChanged()
@@ -30,6 +32,11 @@ class PopularAdapter :RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 				.into(ivPopularMealItems)
 		}
 
+		holder.itemView.setOnLongClickListener {
+			onLongItemClick?.invoke(mealsList[position])
+
+			true
+		}
 	}
 
 	override fun getItemCount(): Int {
