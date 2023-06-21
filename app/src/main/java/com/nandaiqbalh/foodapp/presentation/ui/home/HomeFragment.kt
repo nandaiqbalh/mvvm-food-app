@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.nandaiqbalh.foodapp.R
 import com.nandaiqbalh.foodapp.data.network.models.mealbycategory.MealByCategory
 import com.nandaiqbalh.foodapp.data.network.models.meal.Meal
 import com.nandaiqbalh.foodapp.databinding.FragmentHomeBinding
@@ -87,6 +89,14 @@ class HomeFragment : Fragment() {
 		// categories onclick
 		onCategoryClick()
 
+		// search icon click
+		onSearchIconClick()
+	}
+
+	private fun onSearchIconClick(){
+		binding.icSearch.setOnClickListener {
+			findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+		}
 	}
 
 	private fun onPopularLongClick(){
