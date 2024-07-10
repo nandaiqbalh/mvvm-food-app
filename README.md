@@ -5,7 +5,7 @@ FoodPedia is an android application that is useful for exploring food from aroun
 
 ## Clean architecture with MVVM Pattern
 - Kotlin
-- MVVM (Model, View, View Model)Q
+- MVVM (Model, View, View Model)
 - Glide
 - Room Database
 - Retrofit
